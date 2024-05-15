@@ -13,4 +13,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseDefaultOpenApi();
 
-app.Run();
+app.MapGroup("/api/v1/catalog")
+    .WithTags("Catalog API")
+    .RegisterEndpoints();
+
+await app.RunAsync();
+
+public partial class Program
+{
+}
