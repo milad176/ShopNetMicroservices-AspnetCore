@@ -1,7 +1,4 @@
-﻿using BuildingBlocks.CQRS.Command;
-using Catalog.API.Models;
-
-namespace Catalog.API.Features.Products.CreateProduct;
+﻿namespace Catalog.API.Features.Products.CreateProduct;
 
 public record CreateProductCommand(
 Guid? Id,
@@ -19,7 +16,7 @@ public record CreateProductResult(
     string ImageFile,
     decimal? Price);
 
-internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
@@ -36,14 +33,10 @@ internal class CreateProductCommandHandler : ICommandHandler<CreateProductComman
         // TODO
         // Save to the database
 
-        return new CreateProductResult
-        (
-             product.Id,
-             product.Name,
-             product.Category,
-             product.Description,
-             product.ImageFile,
-             product.Price
-        );
+        session.Store(product);
+        await session.SaveChangesAsync(cancellationToken);
+        var result = product.Adapt<CreateProductResult>();
+
+        return result;
     }
 }
