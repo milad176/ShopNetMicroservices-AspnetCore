@@ -6,17 +6,19 @@
         {
             app.MapGet("/products", GetProducts)
                 .WithName("GetProducts")
-                .Produces<GetProductResponse>(StatusCodes.Status200OK)
+                .Produces<GetProductsResponse>(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
                 .WithSummary("Get Products")
                 .WithDescription("Get Products");
             return app;
         }
 
-        private static async Task<Ok<GetProductResponse>> GetProducts(ISender sender)
+        private static async Task<Ok<GetProductsResponse>> GetProducts(ISender sender)
         {
             var result = await sender.Send(new GetProductsQuery());
-            return result.Adapt<Ok<GetProductResponse>>();
+            var response = new GetProductsResponse(result.Products);
+
+            return TypedResults.Ok(response);
         }
     }
 }
