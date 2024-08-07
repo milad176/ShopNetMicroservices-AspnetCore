@@ -1,4 +1,5 @@
 ﻿using Catalog.API.Features.Products.CreateProduct;
+using Catalog.API.Features.Products.GetProductById;
 using Catalog.API.Features.Products.GetProducts;
 
 namespace Catalog.API.Common
@@ -9,6 +10,7 @@ namespace Catalog.API.Common
         {
             app.MapCreateProductEndpoint();
             app.MapGetProductEndpoint();
+            app.MapGetProductByIdEndpoint();
         }
     }
 }
