@@ -30,9 +30,6 @@ internal class CreateProductCommandHandler(IDocumentSession session) : ICommandH
             Price = command.Price
         };
 
-        // TODO
-        // Save to the database
-
         session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
         var result = product.Adapt<CreateProductResult>();

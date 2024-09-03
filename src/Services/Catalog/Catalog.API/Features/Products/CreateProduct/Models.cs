@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Catalog.API.Features.Products.CreateProduct;
+﻿namespace Catalog.API.Features.Products.CreateProduct;
 
 public record CreateProductRequest(
     [property: JsonPropertyName("id")]
