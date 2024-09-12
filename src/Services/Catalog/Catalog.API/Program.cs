@@ -1,3 +1,4 @@
+using BuildingBlocks.Exceptions.Handler;
 using Catalog.API.Common;
 using Shared;
 
@@ -22,6 +23,8 @@ app.UseDefaultOpenApi();
 app.MapGroup("/api/v1/catalog")
     .WithTags("Catalog API")
     .RegisterEndpoints();
+
+app.UseProblemDetailsResponseExceptionHandler();
 
 await app.RunAsync();
 
