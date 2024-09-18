@@ -1,6 +1,6 @@
-﻿namespace Catalog.API.Features.Products.UpdateProduct
-{
-    public record UpdateProductRequest(
+﻿namespace Catalog.API.Models;
+
+public record ProductModule(
     [property: JsonPropertyName("id")]
     Guid Id,
     [property: JsonPropertyName("name")]
@@ -13,8 +13,3 @@
     string ImageFile,
     [property: JsonPropertyName("price")]
     decimal? Price);
-
-    public record UpdateProductResponse(
-    [property: JsonPropertyName("result")]
-    ProductModule Product);
-}

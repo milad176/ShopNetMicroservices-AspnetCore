@@ -1,7 +1,7 @@
 ﻿namespace Catalog.API.Features.Products.GetProductById
 {
     public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResult>;
-    public record GetProductByIdResult(Product Product);
+    public record GetProductByIdResult(ProductModule Product);
 
     internal class GetProductByIQueryHandler(
         IDocumentSession session) : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
@@ -13,7 +13,7 @@
             if (product is null)
                 throw new ProductNotFoundException(query.Id);
 
-            return new GetProductByIdResult(product);
+            return new GetProductByIdResult(product.Adapt<ProductModule>());
         }
     }
 }
