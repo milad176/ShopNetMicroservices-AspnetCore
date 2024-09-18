@@ -13,6 +13,7 @@ public static class CqrsExtensions
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(assembly);
+            config.AddOpenBehavior(typeof(LoggingBehavior<,>));
             config.AddOpenBehavior(typeof(CommandValidationBehaviors<,>));
             config.AddOpenBehavior(typeof(QueryValidationBehaviors<,>));
         });

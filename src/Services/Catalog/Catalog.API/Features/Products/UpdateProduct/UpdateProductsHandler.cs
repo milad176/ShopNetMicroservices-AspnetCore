@@ -9,7 +9,7 @@ namespace Catalog.API.Features.Products.UpdateProduct
     string? ImageFile,
     decimal? Price) : ICommand<UpdateProductResult>;
 
-    public record UpdateProductResult(Product Product);
+    public record UpdateProductResult(ProductModule Product);
 
     internal class UpdateProductsCommandHandler(
         IDocumentSession session) : ICommandHandler<UpdateProductCommand, UpdateProductResult>
@@ -35,7 +35,7 @@ namespace Catalog.API.Features.Products.UpdateProduct
             session.Update(product);
             await session.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-            var updatedEntity = product.Adapt<Product>();
+            var updatedEntity = product.Adapt<ProductModule>();
 
             return new UpdateProductResult(updatedEntity);
         }

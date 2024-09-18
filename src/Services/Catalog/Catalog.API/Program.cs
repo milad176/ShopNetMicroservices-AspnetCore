@@ -1,5 +1,6 @@
 using BuildingBlocks.Exceptions.Handler;
 using Catalog.API.Common;
+using Catalog.API.Data;
 using Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,11 @@ builder.Services.AddMarten(options =>
     options.Connection(builder.Configuration.GetConnectionString("Database")!);
     options.Schema.For<Product>().UseNumericRevisions(true);
 }).UseLightweightSessions();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.InitializeMartenWith<CatalogInitialDataMigration>();
+}
 
 var app = builder.Build();
 

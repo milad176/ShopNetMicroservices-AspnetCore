@@ -13,10 +13,14 @@
             return app;
         }
 
-        private static async Task<Ok<GetProductsResponse>> GetProducts(ISender sender)
+        private static async Task<Ok<GetProductsResponse>> GetProducts(
+            [AsParameters] PaginationRequest paginationRequest,
+            ISender sender)
         {
-            var result = await sender.Send(new GetProductsQuery());
-            var response = new GetProductsResponse(result.Products);
+            var query = new GetProductsQuery(paginationRequest);
+            var queryResult = await sender.Send(query).ConfigureAwait(false);
+
+            var response = new GetProductsResponse(queryResult.Product);
 
             return TypedResults.Ok(response);
         }

@@ -13,12 +13,16 @@
             return app;
         }
 
-        private static async Task<Ok<GetProductByCategoryResponse>> GetProductsByCategory(string category, ISender sender)
+        private static async Task<Ok<GetProductByCategoryResponse>> GetProductsByCategory(
+            [AsParameters] PaginationRequest paginationRequest,
+            string category,
+            ISender sender)
         {
-            var query = new GetProductByCategoryQuery(category!);
+            var query = new GetProductByCategoryQuery(paginationRequest, category!);
             var queryResult = await sender.Send(query).ConfigureAwait(false);
-            var result = queryResult.Adapt<GetProductByCategoryResponse>();
-            return TypedResults.Ok(result);
+
+            var response = new GetProductByCategoryResponse(queryResult.Product);
+            return TypedResults.Ok(response);
         }
     }
 }
