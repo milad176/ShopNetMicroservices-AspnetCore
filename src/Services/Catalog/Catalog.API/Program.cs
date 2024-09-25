@@ -1,4 +1,5 @@
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.HealthChecks;
 using Catalog.API.Common;
 using Catalog.API.Data;
 using Shared;
@@ -16,6 +17,8 @@ builder.Services.AddMarten(options =>
     options.Schema.For<Product>().UseNumericRevisions(true);
 }).UseLightweightSessions();
 
+builder.Services.AddHealthChecks(builder.Configuration);
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.InitializeMartenWith<CatalogInitialDataMigration>();
@@ -25,6 +28,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseDefaultOpenApi();
+app.MapDefaultHealthChecks();
 
 app.MapGroup("/api/v1/catalog")
     .WithTags("Catalog API")

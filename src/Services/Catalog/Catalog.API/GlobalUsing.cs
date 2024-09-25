@@ -2,6 +2,7 @@
 global using BuildingBlocks.CQRS.Extensions;
 global using BuildingBlocks.CQRS.Query;
 global using BuildingBlocks.Exceptions;
+global using BuildingBlocks.HealthChecks;
 global using Catalog.API.Exceptions;
 global using Catalog.API.Models;
 global using FluentValidation;
