@@ -7,9 +7,14 @@ namespace Basket.API.Features.Basket.StoreBasket
 
     public class StoreBasketCommandHandler : ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
-        public Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
+        public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            ShoppingCart shoppingCart = command.ShoppingCart;
+
+            //TODO: store basket in database (use Marten upsert - if exist = update, if not create)
+            //TODO: Update cache
+
+            return new StoreBasketResult(new ShoppingCart("swn"));
         }
     }
 }
