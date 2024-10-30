@@ -1,5 +1,6 @@
 ﻿using Basket.API.Features.Basket.DeleteBasket;
 using Basket.API.Features.Basket.GetBasket;
+using Basket.API.Features.Basket.StoreBasket;
 
 namespace Basket.API.Common;
 
