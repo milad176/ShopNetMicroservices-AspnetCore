@@ -5,6 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.RegisterMediateR(typeof(Program).Assembly);
 
+builder.Services.AddMarten(options =>
+{
+    options.Connection(builder.Configuration.GetConnectionString("Database")!);
+    options.Schema.For<ShoppingCart>().UseNumericRevisions(true);
+
+}).UseLightweightSessions();
+
 
 var app = builder.Build();
 
