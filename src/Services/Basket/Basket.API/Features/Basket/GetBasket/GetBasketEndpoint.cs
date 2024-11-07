@@ -22,7 +22,7 @@ public static class GetBasketEndpoint
     private static async Task<Ok<GetBasketResponse>> GetBasketAsync(string username, ISender sender)
     {
         var queryResult = await sender.Send(new GetBasketQuery(username)).ConfigureAwait(false);
-        var result = queryResult.ShoppingCart.Adapt<GetBasketResponse>();
+        var result = queryResult.Adapt<GetBasketResponse>();
         return TypedResults.Ok(result);
     }
 }
