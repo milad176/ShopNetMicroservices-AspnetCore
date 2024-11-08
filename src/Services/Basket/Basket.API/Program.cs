@@ -1,4 +1,6 @@
 using Basket.API.Common;
+using BuildingBlocks.Exceptions.Handler;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ app.MapGroup("/api/v1/basket")
     .WithTags("Basket API")
     .WithOpenApi()
     .RegisterEndpoints();
+
+app.UseProblemDetailsResponseExceptionHandler();
 
 app.Run();
 
