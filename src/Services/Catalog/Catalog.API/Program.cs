@@ -1,5 +1,4 @@
 using BuildingBlocks.Exceptions.Handler;
-using BuildingBlocks.HealthChecks;
 using Catalog.API.Common;
 using Catalog.API.Data;
 using Shared;
