@@ -13,6 +13,7 @@
     <PackageReference Include="Marten" Version="7.31.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+    <PackageReference Include="Scrutor" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
