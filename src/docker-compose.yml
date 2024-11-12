@@ -7,6 +7,9 @@ services:
   basketDb:
     image: postgres
 
+  distributedCache:
+    image: redis:alpine
+
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
