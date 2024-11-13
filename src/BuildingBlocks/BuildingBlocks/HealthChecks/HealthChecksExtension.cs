@@ -10,7 +10,7 @@ namespace BuildingBlocks.HealthChecks;
 
 public static class HealthChecksExtension
 {
-    public static IHealthChecksBuilder AddDefaultHealthChecks(this IServiceCollection services, IConfiguration configuration)
+    public static IHealthChecksBuilder AddDefaultHealthChecks(this IServiceCollection services)
     {
         var hcBuilder = services.AddHealthChecks();
 

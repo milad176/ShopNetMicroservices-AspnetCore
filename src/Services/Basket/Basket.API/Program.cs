@@ -1,5 +1,6 @@
 using Basket.API.Common;
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.HealthChecks;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,9 +23,13 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
+builder.Services.AddHealthChecks(builder.Configuration);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.MapDefaultHealthChecks();
+
 app.MapGroup("/api/v1/basket")
     .WithTags("Basket API")
     .WithOpenApi()
