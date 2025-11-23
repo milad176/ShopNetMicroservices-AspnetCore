@@ -33,9 +33,20 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         return couponModel;
     }
 
-    public override Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
+    public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
     {
-        return base.CreateDiscount(request, context);
+        var coupon = request.Coupon.Adapt<Coupon>();
+        if (coupon == null)
+            throw new RpcException(new Status(StatusCode.NotFound, "No discount record found"));
+
+        _dbContext.Coupons.Add(coupon);
+        await _dbContext.SaveChangesAsync();
+
+        _logger.LogInformation(
+            $"Discount is successfully created. ProductName: {coupon.ProductName}, Amount: {coupon.Amount}");
+
+        var couponModel = coupon.Adapt<CouponModel>();
+        return couponModel;
     }
 
     public override Task<CouponModel> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
