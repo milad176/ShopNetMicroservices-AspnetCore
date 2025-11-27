@@ -4,14 +4,12 @@ services:
   catalogDb:
     container_name: catalogDb
     environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_DB=CatalogDb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=CatalogDb
     restart: always
     ports:
-        - "5432:5432"
-    volumes:
-        - postgres_catalog_db:/var/lib/postgresql/data/
+      - "5432:5432"
 
   basketDb:
     container_name: basketDb
@@ -22,8 +20,6 @@ services:
     restart: always
     ports:
       - "5433:5432"
-    volumes:
-      - postgres_basket_db:/var/lib/postgresql/data/
 
   distributedCache:
     container_name: distributedCache
@@ -35,32 +31,34 @@ services:
     container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres
     depends_on:
       - catalogDb
     ports:
-      - "6000:8080"
-      - "6060:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - "8000:80"
 
   basket.api:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
       - ConnectionStrings__Database=Server=basketDb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres
       - ConnectionStrings__Redis=distributedCache:6379
     depends_on:
       - basketDb
       - distributedCache
     ports:
-      - "6001:8080"
-      - "6061:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - "8001:80"
+  
+  discount.grpc:
+    container_name: discount.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
+      - Kestrel__Endpoints__Grpc__Url=http://0.0.0.0:81
+      - Kestrel__Endpoints__Grpc__Protocols=Http2
+      - ConnectionStrings__Database=Data Source=discountdb
+    ports:
+      - "8002:80"
+      - "9002:81"
