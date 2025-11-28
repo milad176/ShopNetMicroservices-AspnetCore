@@ -13,6 +13,9 @@ namespace Basket.API.Features.Basket.StoreBasket
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
+            if (command.ShoppingCart is null)
+                throw new ArgumentNullException(nameof(command.ShoppingCart));
+            
             await DeductDiscount(command.ShoppingCart, cancellationToken);
 
             var result = await basketRepository.StoreBasketAsync(command.ShoppingCart!, cancellationToken)
