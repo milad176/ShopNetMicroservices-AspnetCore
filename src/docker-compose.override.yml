@@ -42,6 +42,7 @@ services:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - Urls__GrpcDiscount=http://discount.grpc:81
       - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
       - ConnectionStrings__Database=Server=basketDb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres
       - ConnectionStrings__Redis=distributedCache:6379
@@ -50,6 +51,7 @@ services:
       - distributedCache
     ports:
       - "8001:80"
+      - "9001:81"
   
   discount.grpc:
     container_name: discount.grpc
