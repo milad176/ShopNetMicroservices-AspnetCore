@@ -8,8 +8,11 @@ public static class InfrastructureServiceRegistration
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
         IConfiguration configuration)
     {
-        //services.AddDbContext<OrderContext>(options =>
-        // options.UseSqlServer(configuration.GetConnectionString("OrderingConnectionString")));
+        var connectionString = configuration.GetConnectionString("Database");
+
+        // Add services to the container.
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(connectionString));
 
         //services.AddScoped<IOrderRepository, OrderRepository>();
 
