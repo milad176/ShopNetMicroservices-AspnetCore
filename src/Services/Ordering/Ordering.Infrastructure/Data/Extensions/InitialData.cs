@@ -33,7 +33,7 @@ internal class InitialData
             var order1 = Order.Create(
                 OrderId.Of(Guid.NewGuid()),
                 CustomerId.Of(new Guid("66182d7e-6b58-40ed-9453-2677f00ca9fa")),
-                OrderName.Of("Oder 1"),
+                OrderName.Of("ORD-1"),
                 shippingAddress: address1,
                 billingAddress: address1,
                 payment1);
@@ -44,7 +44,7 @@ internal class InitialData
             var order2 = Order.Create(
                 OrderId.Of(Guid.NewGuid()),
                 CustomerId.Of(new Guid("28d53fad-ed8a-4e78-8e71-f2004b4e1158")),
-                OrderName.Of("Oder 2"),
+                OrderName.Of("ORD-2"),
                 shippingAddress: address2,
                 billingAddress: address2,
                 payment2);
