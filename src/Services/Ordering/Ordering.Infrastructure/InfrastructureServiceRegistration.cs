@@ -12,7 +12,10 @@ public static class InfrastructureServiceRegistration
 
         // Add services to the container.
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        {
+            options.AddInterceptors(new AuditEntitiesInterceptor());
+            options.UseSqlServer(connectionString);
+        });
 
         //services.AddScoped<IOrderRepository, OrderRepository>();
 
