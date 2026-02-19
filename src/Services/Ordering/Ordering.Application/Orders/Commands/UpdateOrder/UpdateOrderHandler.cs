@@ -14,14 +14,14 @@ public class UpdateOrderHandler(IApplicationDbContext dbContext)
 
 
         UpdateOrderWithNewValues(order, command.Order);
-        
+
         dbContext.Orders.Update(order);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        return new UpdateOrderResult(true); 
+        return new UpdateOrderResult(true);
     }
 
-    public void UpdateOrderWithNewValues(Order order, OrderDto orderDto)
+    private void UpdateOrderWithNewValues(Order order, OrderDto orderDto)
     {
         var updatedShippingAddress = Address.Of(orderDto.ShippingAddress.FirstName, orderDto.ShippingAddress.LastName,
             orderDto.ShippingAddress.EmailAddress, orderDto.ShippingAddress.AddressLine,
