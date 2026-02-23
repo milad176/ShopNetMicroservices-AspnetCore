@@ -1,11 +1,12 @@
 global using BuildingBlocks.CQRS.Command;
+global using BuildingBlocks.CQRS.Query;
+global using BuildingBlocks.Pagination;
+global using MediatR;
+global using Microsoft.Extensions.Logging;
 global using Ordering.Application.Data;
 global using Ordering.Application.Dtos;
 global using Ordering.Domain.Models;
 global using Ordering.Domain.ValueObject;
 global using Ordering.Application.Exceptions;
-global using MediatR;
-global using Microsoft.Extensions.Logging;
-global using Ordering.Domain.Events;
-global using BuildingBlocks.CQRS.Query;
 global using Ordering.Application.Extensions;
+global using Ordering.Domain.Events;
