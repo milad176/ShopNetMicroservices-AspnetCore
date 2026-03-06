@@ -2,6 +2,7 @@ using Basket.API.Common;
 using Basket.API.Models.Configs;
 using BuildingBlocks.Exceptions.Handler;
 using BuildingBlocks.HealthChecks;
+using BuildingBlocks.Messaging.MassTransit;
 using Discount.Grpc.Protos;
 using Microsoft.Extensions.Options;
 using Shared;
@@ -33,6 +34,9 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
     var discountUrl = service.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcDiscount;
     option.Address = new Uri(discountUrl);
 });
+
+//Async Communication Services
+builder.Services.AddMessageBroker(builder.Configuration);
 
 builder.Services.AddHealthChecks(builder.Configuration);
 
