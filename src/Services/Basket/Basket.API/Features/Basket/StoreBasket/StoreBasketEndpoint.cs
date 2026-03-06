@@ -1,6 +1,4 @@
-﻿using Mapster;
-using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Basket.API.Features.Basket.StoreBasket;
 

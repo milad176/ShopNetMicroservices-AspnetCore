@@ -1,5 +1,4 @@
-﻿using BuildingBlocks.CQRS.Command;
-using Discount.Grpc.Protos;
+﻿using Discount.Grpc.Protos;
 
 namespace Basket.API.Features.Basket.StoreBasket
 {
