@@ -5,3 +5,6 @@ global using Basket.API.Models;
 global using BuildingBlocks.CQRS.Extensions;
 global using BuildingBlocks.CQRS.Query;
 global using Marten;
+global using Basket.API.Dtos;
+global using Mapster;
+global using MediatR;
