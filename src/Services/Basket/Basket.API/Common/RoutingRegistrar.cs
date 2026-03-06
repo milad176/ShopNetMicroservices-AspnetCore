@@ -1,4 +1,5 @@
-﻿using Basket.API.Features.Basket.DeleteBasket;
+﻿using Basket.API.Features.Basket.CheckoutBasket;
+using Basket.API.Features.Basket.DeleteBasket;
 using Basket.API.Features.Basket.GetBasket;
 using Basket.API.Features.Basket.StoreBasket;
 
@@ -11,5 +12,6 @@ public static class RoutingRegistrar
         app.MapGetBasketEndpoint();
         app.MapStoreBasketEndpoint();
         app.MapDeleteBasketEndpoint();
+        app.MapCheckoutBasketEndpoints();
     }
 }
