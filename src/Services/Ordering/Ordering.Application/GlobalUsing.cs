@@ -1,6 +1,8 @@
 global using BuildingBlocks.CQRS.Command;
 global using BuildingBlocks.CQRS.Query;
 global using BuildingBlocks.Pagination;
+global using BuildingBlocks.CQRS.Extensions;
+global using BuildingBlocks.Messaging.MassTransit;
 global using MediatR;
 global using Microsoft.Extensions.Logging;
 global using Ordering.Application.Data;
