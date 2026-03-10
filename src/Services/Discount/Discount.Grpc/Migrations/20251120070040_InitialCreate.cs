@@ -32,8 +32,8 @@ namespace Discount.Grpc.Migrations
                 columns: new[] { "Id", "Amount", "Description", "ProductName" },
                 values: new object[,]
                 {
-                    { 1, 200, "Ïphone Description", "Ïphone X" },
-                    { 2, 150, "Samsung Description", "Samsung" }
+                    { 1, 200, "Iphone Description", "IPhone X" },
+                    { 2, 150, "Samsung Description", "Samsung 22" }
                 });
         }
 
