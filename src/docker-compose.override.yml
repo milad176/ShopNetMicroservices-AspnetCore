@@ -35,7 +35,18 @@ services:
     restart: always
     ports:
       - "1433:1433"
-    
+  
+  messageBroker:
+    container_name: messageBroker
+    hostname: ecommerce-mq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
   catalog.api:
     container_name: catalog.api
     environment:
