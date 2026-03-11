@@ -35,7 +35,18 @@ services:
     restart: always
     ports:
       - "1433:1433"
-    
+  
+  messageBroker:
+    container_name: messageBroker
+    hostname: ecommerce-mq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
   catalog.api:
     container_name: catalog.api
     environment:
@@ -55,9 +66,13 @@ services:
       - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
       - ConnectionStrings__Database=Server=basketDb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres
       - ConnectionStrings__Redis=distributedCache:6379
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
     depends_on:
       - basketDb
       - distributedCache
+      - messageBroker
     ports:
       - "8001:80"
       - "9001:81"
@@ -73,3 +88,19 @@ services:
     ports:
       - "8002:80"
       - "9002:81"
+  
+  ordering.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
+      - ConnectionStrings__Database=Server=orderdb;Database=OrderDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
+      - FeatureManagement__OrderFullfilment=false
+    depends_on:
+      - orderdb
+      - messagebroker
+    ports:
+      - "8003:80"
+      - "9003:81"

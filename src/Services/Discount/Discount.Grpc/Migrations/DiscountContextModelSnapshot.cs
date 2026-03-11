@@ -42,15 +42,15 @@ namespace Discount.Grpc.Migrations
                         {
                             Id = 1,
                             Amount = 200,
-                            Description = "Ïphone Description",
-                            ProductName = "Ïphone X"
+                            Description = "Iphone Description",
+                            ProductName = "IPhone X"
                         },
                         new
                         {
                             Id = 2,
                             Amount = 150,
                             Description = "Samsung Description",
-                            ProductName = "Samsung"
+                            ProductName = "Samsung 22"
                         });
                 });
 #pragma warning restore 612, 618

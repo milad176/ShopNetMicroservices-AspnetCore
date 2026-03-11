@@ -6,7 +6,7 @@ public static class CheckoutBasketEndpoints
 {
     public static IEndpointRouteBuilder MapCheckoutBasketEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/basket/checkout", CheckoutBasketAsync)
+        app.MapPost("/checkout", CheckoutBasketAsync)
             .WithName("CheckoutBasket")
             .Produces<CheckoutBasketResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
