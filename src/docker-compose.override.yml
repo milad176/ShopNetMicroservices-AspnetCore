@@ -66,9 +66,13 @@ services:
       - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
       - ConnectionStrings__Database=Server=basketDb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres
       - ConnectionStrings__Redis=distributedCache:6379
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
     depends_on:
       - basketDb
       - distributedCache
+      - messageBroker
     ports:
       - "8001:80"
       - "9001:81"
