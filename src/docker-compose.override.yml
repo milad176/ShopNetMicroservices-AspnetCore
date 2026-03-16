@@ -105,3 +105,16 @@ services:
     ports:
       - "8003:80"
       - "9003:81"
+  
+  yarpapigateway:
+    container_name: yarpapigateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
+    depends_on:
+      - catalog.api
+      - basket.api
+      - ordering.api
+    ports:
+      - "8004:80"
+      - "9004:81"
