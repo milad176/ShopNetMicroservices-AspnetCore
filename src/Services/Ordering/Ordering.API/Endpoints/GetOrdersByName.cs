@@ -14,7 +14,7 @@ public class GetOrdersByName : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/orders/{orderName}", async (string orderName, ISender sender) =>
+        app.MapGet("/api/v1/orders/{orderName}", async (string orderName, ISender sender) =>
             {
                 var result = await sender.Send(new GetOrdersByNameQuery(orderName));
 
