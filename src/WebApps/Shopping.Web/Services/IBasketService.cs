@@ -1,6 +1,3 @@
-using Refit;
-using Shopping.Web.Models.Basket;
-
 namespace Shopping.Web.Services;
 
 public interface IBasketService
