@@ -23,7 +23,7 @@ public interface IBasketService
         try
         {
             var getBasketResponse = await GetBasket(userName);
-            basket = getBasketResponse.Cart;
+            basket = getBasketResponse.ShoppingCart;
         }
         catch (ApiException apiException) when (apiException.StatusCode == HttpStatusCode.NotFound)
         {

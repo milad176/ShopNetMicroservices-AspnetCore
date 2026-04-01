@@ -17,9 +17,9 @@ public class ShoppingCartItemModel
 }
 
 // wrapper classes
-public record GetBasketResponse(ShoppingCartModel Cart);
+public record GetBasketResponse(ShoppingCartModel ShoppingCart);
 
-public record StoreBasketRequest(ShoppingCartModel Cart);
+public record StoreBasketRequest(ShoppingCartModel ShoppingCart);
 public record StoreBasketResponse(string UserName);
 
 public record DeleteBasketResponse(bool IsSuccess);
