@@ -1,4 +1,4 @@
 ﻿namespace Catalog.API.Features.Products.GetProducts
 {
-    public record GetProductsResponse(PaginatedItems<ProductModule> Product);
+    public record GetProductsResponse(PaginatedItems<ProductModule> Products);
 }

@@ -10,7 +10,7 @@ public class IndexModel(ICatalogService catalogService, IBasketService basketSer
         logger.LogInformation("Index page visited");
         var result = await catalogService.GetProducts();
         //var result = await catalogService.GetProducts(2, 3);
-        ProductList = result.Product.Data;
+        ProductList = result.Products.Data;
         return Page();
     }
 
@@ -19,6 +19,9 @@ public class IndexModel(ICatalogService catalogService, IBasketService basketSer
         logger.LogInformation("Add to cart button clicked");
 
         var productResponse = await catalogService.GetProduct(productId);
+        
+        if (productResponse?.Product == null)
+            throw new Exception("Product not found or deserialization failed");
 
         var basket = await basketService.LoadUserBasket();
 

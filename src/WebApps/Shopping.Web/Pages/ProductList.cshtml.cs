@@ -18,16 +18,16 @@ public class ProductListModel(
     {
         var response = await catalogService.GetProducts();
 
-        CategoryList = response.Product.Data.SelectMany(p => p.Category).Distinct();
+        CategoryList = response.Products.Data.SelectMany(p => p.Category).Distinct();
 
         if (!string.IsNullOrWhiteSpace(categoryName))
         {
-            ProductList = response.Product.Data.Where(p => p.Category.Contains(categoryName));
+            ProductList = response.Products.Data.Where(p => p.Category.Contains(categoryName));
             SelectedCategory = categoryName;
         }
         else
         {
-            ProductList = response.Product.Data;
+            ProductList = response.Products.Data;
         }
 
         return Page();

@@ -20,7 +20,7 @@
             var query = new GetProductsQuery(paginationRequest);
             var queryResult = await sender.Send(query).ConfigureAwait(false);
 
-            var response = new GetProductsResponse(queryResult.Product);
+            var response = new GetProductsResponse(queryResult.Products);
 
             return TypedResults.Ok(response);
         }
