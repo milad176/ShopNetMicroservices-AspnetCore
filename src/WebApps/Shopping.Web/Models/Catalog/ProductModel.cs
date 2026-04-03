@@ -13,6 +13,6 @@ public class ProductModel
 }
 
 //wrapper classes
-public record GetProductsResponse(PaginatedItems<ProductModel> Product);
+public record GetProductsResponse(PaginatedItems<ProductModel> Products);
 public record GetProductByCategoryResponse(IEnumerable<ProductModel> Products);
 public record GetProductByIdResponse(ProductModel Product);

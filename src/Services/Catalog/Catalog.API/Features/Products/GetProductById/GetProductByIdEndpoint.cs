@@ -18,8 +18,8 @@ public static class GetProductByIdEndpoint
     private static async Task<Ok<GetProductByIdResponse>> GetProductById(Guid id, ISender sender)
     {
         var queryResult = await sender.Send(new GetProductByIdQuery(id)).ConfigureAwait(false);
-        var result = queryResult.Product.Adapt<GetProductByIdResponse>();
+        var result = new GetProductByIdResponse(queryResult.Product);
+
         return TypedResults.Ok(result);
     }
 }
-
