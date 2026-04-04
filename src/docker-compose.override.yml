@@ -118,3 +118,15 @@ services:
     ports:
       - "8004:80"
       - "9004:81"
+        
+  shopping.web:
+    container_name: shopping.web
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
+      - ApiSettings__GatewayAddress=http://yarpapigateway:80
+    depends_on:
+      - yarpapigateway
+    ports:
+      - "8005:80"
+      - "9005:81"
