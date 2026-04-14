@@ -50,8 +50,15 @@ services:
     image: ${DOCKER_REGISTRY-}shoppingweb
     build:
       context: .
-      dockerfile: WebApps/Shopping.Web/Dockerfile      
+      dockerfile: WebApps/Shopping.Web/Dockerfile  
       
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.13.4
+    
 volumes:
   postgres_catalog_db:
   postgres_basket_db:
+  elasticsearch_data:
