@@ -1,30 +1,9 @@
-using System.Reflection;
-using Refit;
+using Common.Logging;
 using Serilog;
-using Serilog.Sinks.Elasticsearch;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appName = Assembly.GetExecutingAssembly().GetName().Name;
-var environment = builder.Environment.EnvironmentName;
-
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .Enrich.WithMachineName()
-    .WriteTo.Console()
-    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(builder.Configuration["ElasticConfiguration:Uri"]!))
-    {
-        AutoRegisterTemplate = true,
-        NumberOfReplicas = 1,
-        NumberOfShards = 2,
-        IndexFormat =
-            $"applogs-{appName?.ToLower().Replace(".", "-")}-{environment?.ToLower()}-logs-{DateTime.UtcNow:yyyy-MM}"
-    })
-    .Enrich.WithProperty("Environment", environment)
-    .CreateLogger();
-
-builder.Host.UseSerilog();
+builder.Host.UseSeriLogging();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
