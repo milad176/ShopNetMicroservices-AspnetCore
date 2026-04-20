@@ -3,17 +3,26 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Serilog from your shared library
 builder.Host.UseSeriLogging();
+
+// Register DelegatingHandler
+builder.Services.AddTransient<LoggingDelegatingHandler>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 builder.Services.AddRefitClient<ICatalogService>()
-    .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
+    .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
+    .AddHttpMessageHandler<LoggingDelegatingHandler>();
+
 builder.Services.AddRefitClient<IBasketService>()
-    .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
+    .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
+    .AddHttpMessageHandler<LoggingDelegatingHandler>();
+
 builder.Services.AddRefitClient<IOrderingService>()
-    .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
+    .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
+    .AddHttpMessageHandler<LoggingDelegatingHandler>();
 
 var app = builder.Build();
 
