@@ -9,6 +9,8 @@ builder.Host.UseSeriLogging();
 // Register DelegatingHandler
 builder.Services.AddTransient<LoggingDelegatingHandler>();
 
+builder.Services.AddHttpContextAccessor();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
@@ -26,6 +28,7 @@ builder.Services.AddRefitClient<IOrderingService>()
 
 var app = builder.Build();
 
+app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
