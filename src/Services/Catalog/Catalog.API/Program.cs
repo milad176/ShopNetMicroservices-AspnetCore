@@ -1,11 +1,17 @@
 using BuildingBlocks.Exceptions.Handler;
 using Catalog.API.Common;
 using Catalog.API.Data;
+using Common.Logging;
+using Serilog;
 using Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Serilog from shared library
+builder.Host.UseSeriLogging();
+
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();
 builder.AddDefaultOpenApi();
 builder.Services.RegisterMediateR(typeof(Program).Assembly);
 
@@ -24,10 +30,13 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-// ✔️ Add routing BEFORE exception handler
+app.UseMiddleware<CorrelationIdMiddleware>();
+app.UseSerilogRequestLogging();
+
+// Add routing BEFORE exception handler
 app.UseRouting();
 
-// ✔️ Exception handler AFTER routing, BEFORE endpoints
+// Exception handler AFTER routing, BEFORE endpoints
 app.UseProblemDetailsResponseExceptionHandler();
 
 // OpenAPI
@@ -44,4 +53,6 @@ app.MapGroup("/api/v1/catalog")
 // Run
 await app.RunAsync();
 
-public partial class Program { }
+public partial class Program
+{
+}
