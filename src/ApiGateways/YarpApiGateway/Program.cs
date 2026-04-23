@@ -1,8 +1,16 @@
+using Common.Logging;
 using Microsoft.AspNetCore.RateLimiting;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Serilog
+builder.Host.UseSeriLogging();
+
+// Needed for correlation propagation
+builder.Services.AddHttpContextAccessor();
+
+// Add Reverse proxy (YARP) services to the container.
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
@@ -17,9 +25,21 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseRateLimiter();
+// Correlation FIRST
+app.UseMiddleware<CorrelationIdMiddleware>();
 
+// Serilog request logging
+app.UseSerilogRequestLogging(options =>
+{
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("CorrelationId", httpContext.TraceIdentifier);
+    };
+});
+
+// Configure the HTTP request pipeline.
+app.UseRouting();
+app.UseRateLimiter();
 app.MapReverseProxy();
 
 app.Run();

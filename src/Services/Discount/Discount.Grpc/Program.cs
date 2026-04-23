@@ -1,11 +1,20 @@
+using Common.Logging;
 using Discount.Grpc.Data;
+using Discount.Grpc.Interceptors;
 using Discount.Grpc.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSeriLogging();
+
 // Add services to the container.
-builder.Services.AddGrpc();
+builder.Services.AddSingleton<CorrelationIdInterceptor>();
+builder.Services.AddGrpc(options =>
+{
+    options.Interceptors.Add<CorrelationIdInterceptor>();
+});
+
 builder.Services.AddDbContext<DiscountContext>(opts =>
     opts.UseSqlite(builder.Configuration.GetConnectionString("Database")));
 

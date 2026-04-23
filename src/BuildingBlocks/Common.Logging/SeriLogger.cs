@@ -13,12 +13,14 @@ public static class SeriLogger
         {
             var env = context.HostingEnvironment;
             var appName = Assembly.GetEntryAssembly()?.GetName().Name;
+            var serviceName = appName?.ToLower().Replace(".", "-");
 
             configuration
                 .ReadFrom.Configuration(context.Configuration)
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
                 .Enrich.WithProperty("Environment", env.EnvironmentName)
+                .Enrich.WithProperty("service.name", serviceName) 
                 .WriteTo.Console()
                 .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(
                     new Uri(context.Configuration["ElasticConfiguration:Uri"]!))

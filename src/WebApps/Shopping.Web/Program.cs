@@ -3,15 +3,12 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Serilog from your shared library
+// Serilog from shared library
 builder.Host.UseSeriLogging();
 
-// Register DelegatingHandler
-builder.Services.AddTransient<LoggingDelegatingHandler>();
-
-builder.Services.AddHttpContextAccessor();
-
 // Add services to the container.
+builder.Services.AddTransient<LoggingDelegatingHandler>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 
 builder.Services.AddRefitClient<ICatalogService>()
@@ -29,7 +26,13 @@ builder.Services.AddRefitClient<IOrderingService>()
 var app = builder.Build();
 
 app.UseMiddleware<CorrelationIdMiddleware>();
-app.UseSerilogRequestLogging();
+app.UseSerilogRequestLogging(options =>
+{
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("CorrelationId", httpContext.TraceIdentifier);
+    };
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
