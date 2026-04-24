@@ -52,9 +52,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
-      - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres
+      - ConnectionStrings__Database=Server=catalogDb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres
+      - ElasticConfiguration__Uri=http://elasticsearch:9200
     depends_on:
       - catalogDb
+      - elasticsearch
     ports:
       - "8000:80"
 
@@ -69,10 +71,12 @@ services:
       - MessageBroker__Host=amqp://ecommerce-mq:5672
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
+      - ElasticConfiguration__Uri=http://elasticsearch:9200
     depends_on:
       - basketDb
       - distributedCache
       - messageBroker
+      - elasticsearch
     ports:
       - "8001:80"
       - "9001:81"
@@ -85,6 +89,9 @@ services:
       - Kestrel__Endpoints__Grpc__Url=http://0.0.0.0:81
       - Kestrel__Endpoints__Grpc__Protocols=Http2
       - ConnectionStrings__Database=Data Source=discountdb
+      - ElasticConfiguration__Uri=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
     ports:
       - "8002:80"
       - "9002:81"
@@ -99,9 +106,11 @@ services:
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
       - FeatureManagement__OrderFullfilment=false
+      - ElasticConfiguration__Uri=http://elasticsearch:9200
     depends_on:
       - orderDb
       - messageBroker
+      - elasticsearch
     ports:
       - "8003:80"
       - "9003:81"
@@ -111,26 +120,30 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
+      - ElasticConfiguration__Uri=http://elasticsearch:9200
     depends_on:
       - catalog.api
       - basket.api
       - ordering.api
+      - elasticsearch
     ports:
       - "8004:80"
       - "9004:81"
-        
+  
   shopping.web:
     container_name: shopping.web
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
       - ApiSettings__GatewayAddress=http://yarpapigateway:80
+      - ElasticConfiguration__Uri=http://elasticsearch:9200
     depends_on:
       - yarpapigateway
+      - elasticsearch
     ports:
       - "8005:80"
       - "9005:81"
-        
+  
   elasticsearch:
     container_name: elasticsearch
     environment:
@@ -142,7 +155,7 @@ services:
     ports:
       - "9200:9200"
     restart: always
-    
+  
   kibana:
     container_name: kibana
     environment:
