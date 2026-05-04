@@ -13,15 +13,20 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
-    .AddHttpMessageHandler<LoggingDelegatingHandler>();
+    .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(PollyPolicies.GetRetryPolicy());
+
 
 builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
-    .AddHttpMessageHandler<LoggingDelegatingHandler>();
+    .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(PollyPolicies.GetRetryPolicy());
 
 builder.Services.AddRefitClient<IOrderingService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
-    .AddHttpMessageHandler<LoggingDelegatingHandler>();
+    .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(PollyPolicies.GetRetryPolicy());
+
 
 var app = builder.Build();
 
