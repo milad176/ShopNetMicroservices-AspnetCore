@@ -23,4 +23,26 @@ public static class PollyPolicies
                         outcome.Exception?.Message ?? outcome.Result.StatusCode.ToString());
                 });
     }
+
+    public static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+    {
+        return HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .Or<TimeoutRejectedException>()
+            .CircuitBreakerAsync(
+                3,
+                TimeSpan.FromSeconds(15),
+                onBreak: (result, breakDelay) =>
+                {
+                    Serilog.Log.Error("Circuit breaker opened for {Delay}s due to {Reason}",
+                        breakDelay.TotalSeconds,
+                        result.Exception?.Message ?? result.Result.StatusCode.ToString());
+                },
+                onReset: () => { Serilog.Log.Information("Circuit breaker reset."); });
+    }
+
+    public static IAsyncPolicy<HttpResponseMessage> GetTimeoutPolicy()
+    {
+        return Policy.TimeoutAsync<HttpResponseMessage>(10);
+    }
 }

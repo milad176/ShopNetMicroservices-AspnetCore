@@ -14,18 +14,23 @@ builder.Services.AddRazorPages();
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
-    .AddPolicyHandler(PollyPolicies.GetRetryPolicy());
-
+    .AddPolicyHandler(PollyPolicies.GetRetryPolicy())
+    .AddPolicyHandler(PollyPolicies.GetCircuitBreakerPolicy())
+    .AddPolicyHandler(PollyPolicies.GetTimeoutPolicy());
 
 builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
-    .AddPolicyHandler(PollyPolicies.GetRetryPolicy());
+    .AddPolicyHandler(PollyPolicies.GetRetryPolicy())
+    .AddPolicyHandler(PollyPolicies.GetCircuitBreakerPolicy())
+    .AddPolicyHandler(PollyPolicies.GetTimeoutPolicy());
 
 builder.Services.AddRefitClient<IOrderingService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
-    .AddPolicyHandler(PollyPolicies.GetRetryPolicy());
+    .AddPolicyHandler(PollyPolicies.GetRetryPolicy())
+    .AddPolicyHandler(PollyPolicies.GetCircuitBreakerPolicy())
+    .AddPolicyHandler(PollyPolicies.GetTimeoutPolicy());
 
 
 var app = builder.Build();
