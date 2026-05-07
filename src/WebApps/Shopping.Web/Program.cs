@@ -1,3 +1,4 @@
+using BuildingBlocks.Resilience.Http;
 using Common.Logging;
 using Serilog;
 
@@ -14,24 +15,18 @@ builder.Services.AddRazorPages();
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
-    .AddPolicyHandler(PollyPolicies.GetRetryPolicy())
-    .AddPolicyHandler(PollyPolicies.GetCircuitBreakerPolicy())
-    .AddPolicyHandler(PollyPolicies.GetTimeoutPolicy());
+    .AddStandardResiliencePolicies();
 
 builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
-    .AddPolicyHandler(PollyPolicies.GetRetryPolicy())
-    .AddPolicyHandler(PollyPolicies.GetCircuitBreakerPolicy())
-    .AddPolicyHandler(PollyPolicies.GetTimeoutPolicy());
+    .AddStandardResiliencePolicies();
+
 
 builder.Services.AddRefitClient<IOrderingService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
-    .AddPolicyHandler(PollyPolicies.GetRetryPolicy())
-    .AddPolicyHandler(PollyPolicies.GetCircuitBreakerPolicy())
-    .AddPolicyHandler(PollyPolicies.GetTimeoutPolicy());
-
+    .AddStandardResiliencePolicies();
 
 var app = builder.Build();
 
