@@ -4,6 +4,7 @@ using Basket.API.Models.Configs;
 using BuildingBlocks.Exceptions.Handler;
 using BuildingBlocks.HealthChecks;
 using BuildingBlocks.Messaging.MassTransit;
+using BuildingBlocks.Resilience.gRPC;
 using Common.Logging;
 using Discount.Grpc.Protos;
 using Microsoft.Extensions.Options;
@@ -42,7 +43,12 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
         var discountUrl = service.GetRequiredService<IOptions<UrlsConfig>>().Value.GrpcDiscount;
         option.Address = new Uri(discountUrl);
     })
-    .AddInterceptor<GrpcCorrelationInterceptor>();
+    .AddInterceptor<GrpcCorrelationInterceptor>()
+    .AddPolicyHandler((sp, request) =>
+    {
+        var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger("GrpcPolicy");
+        return GrpcResiliencePolicies.CreateGrpcRetryPolicy(logger);
+    });
 
 //Async Communication Services
 builder.Services.AddMessageBroker(builder.Configuration);
