@@ -20,6 +20,7 @@ builder.Host.UseSeriLogging();
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<GrpcCorrelationInterceptor>();
+builder.Services.AddTransient<GrpcRetryInterceptor>();
 builder.Services.RegisterMediateR(typeof(Program).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.AddDefaultOpenApi();
@@ -44,11 +45,7 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
         option.Address = new Uri(discountUrl);
     })
     .AddInterceptor<GrpcCorrelationInterceptor>()
-    .AddPolicyHandler((sp, request) =>
-    {
-        var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger("GrpcPolicy");
-        return GrpcResiliencePolicies.CreateGrpcRetryPolicy(logger);
-    });
+    .AddInterceptor<GrpcRetryInterceptor>();
 
 //Async Communication Services
 builder.Services.AddMessageBroker(builder.Configuration);
