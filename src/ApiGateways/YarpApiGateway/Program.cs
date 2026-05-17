@@ -1,6 +1,8 @@
+using BuildingBlocks.HealthChecks;
 using Common.Logging;
 using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
+using YarpApiGateway.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,8 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
     });
 });
 
+builder.Services.AddHealthChecks(builder.Configuration);
+
 var app = builder.Build();
 
 // Correlation FIRST
@@ -41,5 +45,6 @@ app.UseSerilogRequestLogging(options =>
 app.UseRouting();
 app.UseRateLimiter();
 app.MapReverseProxy();
+app.MapDefaultHealthChecks();
 
 app.Run();
