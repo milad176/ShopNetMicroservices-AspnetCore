@@ -11,8 +11,8 @@ public static class HealthChecksExtension
         var databaseConfiguration = configuration.TryGetValidatedOptions<DatabaseConfigurations>();
 
         services.AddHealthChecks()
-            .AddNpgSql(databaseConfiguration.PostgresDb, name: "postgres", tags: ["ready", "liveness"])
-            .AddRedis(databaseConfiguration.Redis, "redis", tags: ["ready", "liveness"]);
+            .AddNpgSql(databaseConfiguration.PostgresDb, name: "postgres", tags: ["ready"])
+            .AddRedis(databaseConfiguration.Redis, "redis", tags: ["ready"]);
 
         return services;
     }

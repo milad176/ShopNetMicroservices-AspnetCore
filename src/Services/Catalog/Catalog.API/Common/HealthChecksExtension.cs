@@ -9,7 +9,7 @@ public static class HealthChecksExtension
         services.AddDefaultHealthChecks();
 
         services.AddHealthChecks()
-            .AddNpgSql(configuration.GetConnectionString("Database")!, name: "postgres", tags: ["ready", "liveness"]);
+            .AddNpgSql(configuration.GetConnectionString("Database")!, name: "postgres", tags: ["ready"]);
 
         return services;
     }
