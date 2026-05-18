@@ -1,6 +1,6 @@
 using BuildingBlocks.Exceptions.Handler;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using BuildingBlocks.HealthChecks;
+using Ordering.API.Common;
 
 namespace Ordering.API;
 
@@ -9,8 +9,7 @@ public static class ApiServiceRegistration
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddCarter();
-        services.AddHealthChecks()
-            .AddSqlServer(configuration.GetConnectionString("Database")!);
+        services.AddHealthChecks(configuration);
 
         return services;
     }
@@ -19,11 +18,8 @@ public static class ApiServiceRegistration
     {
         app.MapCarter();
         app.UseProblemDetailsResponseExceptionHandler();
-        app.UseHealthChecks("/health",
-            new HealthCheckOptions
-            {
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
+        app.MapDefaultHealthChecks();
+
         return app;
     }
 }

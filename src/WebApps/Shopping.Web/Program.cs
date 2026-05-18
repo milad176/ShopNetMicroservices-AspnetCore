@@ -1,6 +1,8 @@
+using BuildingBlocks.HealthChecks;
 using BuildingBlocks.Resilience.Http;
 using Common.Logging;
 using Serilog;
+using Shopping.Web.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Host.UseSeriLogging();
 builder.Services.AddTransient<LoggingDelegatingHandler>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
+builder.Services.AddHealthChecks(builder.Configuration);
 
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
@@ -47,13 +50,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.MapDefaultHealthChecks();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapRazorPages();
 
 app.Run();
