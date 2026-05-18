@@ -1,7 +1,7 @@
 using BuildingBlocks.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace YarpApiGateway.Common;
+namespace Shopping.Web.Common;
 
 public static class HealthChecksExtension
 {
