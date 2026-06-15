@@ -1,10 +1,14 @@
 using BuildingBlocks.HealthChecks;
+using BuildingBlocks.OpenTelemetry;
 using BuildingBlocks.Resilience.Http;
 using Common.Logging;
 using Serilog;
 using Shopping.Web.Common;
 
 var builder = WebApplication.CreateBuilder(args);
+
+const string serviceName = "eshop.web";
+builder.Services.AddOpenTelemetryOtl(serviceName);
 
 // Serilog from shared library
 builder.Host.UseSeriLogging();

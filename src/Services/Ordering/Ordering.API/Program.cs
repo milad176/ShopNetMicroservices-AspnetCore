@@ -1,3 +1,4 @@
+using BuildingBlocks.OpenTelemetry;
 using Common.Logging;
 using Ordering.API;
 using Ordering.Application;
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSeriLogging();
 builder.Services.AddHttpContextAccessor();
+
+const string serviceName = "eshop.order.api";
+builder.Services.AddOpenTelemetryOtl(serviceName);
 
 // Add services to the container.
 builder.Services

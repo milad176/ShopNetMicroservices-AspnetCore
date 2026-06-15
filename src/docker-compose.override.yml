@@ -119,6 +119,10 @@ services:
       - MessageBroker__Password=guest
       - FeatureManagement__OrderFullfilment=false
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - orderDb
       - messageBroker
@@ -133,6 +137,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - catalog.api
       - basket.api
@@ -149,6 +157,10 @@ services:
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
       - ApiSettings__GatewayAddress=http://yarpapigateway:80
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - yarpapigateway
       - elasticsearch
