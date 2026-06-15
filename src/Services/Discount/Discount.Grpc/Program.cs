@@ -1,4 +1,5 @@
 using BuildingBlocks.HealthChecks;
+using BuildingBlocks.OpenTelemetry;
 using Common.Logging;
 using Discount.Grpc.Data;
 using Discount.Grpc.Interceptors;
@@ -16,6 +17,9 @@ builder.Services.AddGrpc(options =>
 {
     options.Interceptors.Add<CorrelationIdInterceptor>();
 });
+
+const string serviceName = "eshop.discount.grpc";
+builder.Services.AddOpenTelemetryOtl(serviceName);
 
 builder.Services.AddDbContext<DiscountContext>(opts =>
     opts.UseSqlite(builder.Configuration.GetConnectionString("Database")));
