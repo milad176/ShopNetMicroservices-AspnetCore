@@ -1,0 +1,62 @@
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+
+  otlp:
+    endpoint: "jaeger:4317"
+    tls:
+      insecure: true
+
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+
+connectors:
+  spanmetrics:
+    histogram:
+      explicit:
+        buckets: [ 5ms, 10ms, 25ms, 50ms, 100ms, 250ms, 500ms, 1000ms ]
+
+processors:
+  filter/exclude-health-api-traces:
+    error_mode: ignore
+    traces:
+      span:
+        - 'attributes["http.route"] == "/health"'
+        - 'attributes["http.route"] == "/hc"'
+  filter/exclude-health-api-logs:
+    error_mode: ignore
+    logs:
+      exclude:
+        match_type: strict
+        record_attributes:
+          - key: RequestPath
+            value: /hc
+  resource:
+    attributes:
+      - action: insert
+        key: service_name
+        from_attribute: service.name
+      - action: insert
+        key: loki.resource.labels
+        value: service_name
+
+service:
+  pipelines:
+    traces:
+      receivers: [ otlp ]
+      processors: [filter/exclude-health-api-traces]
+      exporters: [ otlp, spanmetrics ]
+    metrics:
+      receivers: [ spanmetrics ]
+      exporters: [ prometheus ]
+    logs:
+      receivers: [ otlp ]
+      processors: [ resource, filter/exclude-health-api-logs ]
+      exporters: [ loki ]
