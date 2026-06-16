@@ -4,6 +4,7 @@ using Basket.API.Models.Configs;
 using BuildingBlocks.Exceptions.Handler;
 using BuildingBlocks.HealthChecks;
 using BuildingBlocks.Messaging.MassTransit;
+using BuildingBlocks.OpenTelemetry;
 using BuildingBlocks.Resilience.gRPC;
 using Common.Logging;
 using Discount.Grpc.Protos;
@@ -22,6 +23,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<GrpcCorrelationInterceptor>();
 builder.Services.AddTransient<GrpcRetryInterceptor>();
 builder.Services.RegisterMediateR(typeof(Program).Assembly);
+
+const string serviceName = "eshop.basket.api";
+builder.Services.AddOpenTelemetryOtl(serviceName);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.AddDefaultOpenApi();
 builder.Services.Configure<UrlsConfig>(builder.Configuration.GetSection("urls"));

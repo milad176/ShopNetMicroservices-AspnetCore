@@ -1,4 +1,5 @@
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.OpenTelemetry;
 using Catalog.API.Common;
 using Catalog.API.Data;
 using Common.Logging;
@@ -14,6 +15,9 @@ builder.Host.UseSeriLogging();
 builder.Services.AddHttpContextAccessor();
 builder.AddDefaultOpenApi();
 builder.Services.RegisterMediateR(typeof(Program).Assembly);
+
+const string serviceName = "eshop.catalog.api";
+builder.Services.AddOpenTelemetryOtl(serviceName);
 
 builder.Services.AddMarten(options =>
 {

@@ -54,6 +54,10 @@ services:
       - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
       - ConnectionStrings__Database=Server=catalogDb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - catalogDb
       - elasticsearch
@@ -72,6 +76,10 @@ services:
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - basketDb
       - distributedCache
@@ -90,6 +98,10 @@ services:
       - Kestrel__Endpoints__Grpc__Protocols=Http2
       - ConnectionStrings__Database=Data Source=discountdb
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - elasticsearch
     ports:
@@ -107,6 +119,10 @@ services:
       - MessageBroker__Password=guest
       - FeatureManagement__OrderFullfilment=false
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - orderDb
       - messageBroker
@@ -121,6 +137,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - catalog.api
       - basket.api
@@ -137,6 +157,10 @@ services:
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:80
       - ApiSettings__GatewayAddress=http://yarpapigateway:80
       - ElasticConfiguration__Uri=http://elasticsearch:9200
+      - OTEL_EXPORTER_JAEGER_AGENT_HOST=jaeger
+      - OTEL_EXPORTER_JAEGER_AGENT_PORT=6831
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
       - yarpapigateway
       - elasticsearch
@@ -165,3 +189,51 @@ services:
     ports:
       - "5601:5601"
     restart: always
+  
+  otel-collector:
+    container_name: otel-collector
+    restart: unless-stopped
+    command: --config /etc/otelcol/otel-collector-config.yml
+    volumes:
+      - ./otel/otel-collector-config.yml:/etc/otelcol/otel-collector-config.yml
+    ports:
+      - "4317:4317"
+    depends_on:
+      - jaeger
+      - prometheus
+      - loki
+  
+  jaeger:
+    container_name: jaeger
+    restart: unless-stopped
+    command: --query.ui-config=/etc/jaeger/jaeger-ui.json --collector.otlp.enabled=true --prometheus.server-url=http://prometheus:9090 --prometheus.query.support-spanmetrics-connector=true
+    environment:
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_QUERY_NORMALIZE_CALLS=true
+      - PROMETHEUS_QUERY_NORMALIZE_DURATION=true
+    volumes:
+      - ./otel/jaeger-ui.json:/etc/jaeger/jaeger-ui.json
+    ports:
+      - "16686:16686"
+  
+  prometheus:
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./otel/prometheus.yml:/etc/prometheus/prometheus.yml"
+  
+  loki:
+    container_name: loki
+    restart: unless-stopped
+    command: -config.file=/mnt/config/loki-config.yml
+    volumes:
+      - ./otel/loki.yml:/mnt/config/loki-config.yml
+    ports:
+      - "3100:3100"
+        
+        
+ 
+ 
+ 

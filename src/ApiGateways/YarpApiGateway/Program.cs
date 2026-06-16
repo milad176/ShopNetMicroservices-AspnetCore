@@ -1,4 +1,5 @@
 using BuildingBlocks.HealthChecks;
+using BuildingBlocks.OpenTelemetry;
 using Common.Logging;
 using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Serilog
 builder.Host.UseSeriLogging();
+
+const string serviceName = "api.gateway";
+builder.Services.AddOpenTelemetryOtl(serviceName);
 
 // Needed for correlation propagation
 builder.Services.AddHttpContextAccessor();

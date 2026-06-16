@@ -1,28 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+
     <UserSecretsId>f2f27d29-719d-46aa-bc00-f2362042d081</UserSecretsId>
+
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="9.0.0" />
-    <PackageReference Include="Google.Protobuf" Version="3.33.1" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
-    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.71.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.71.0">
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" />
+
+    <PackageReference Include="Google.Protobuf" />
+    <PackageReference Include="Grpc.AspNetCore" />
+    <PackageReference Include="Grpc.Net.ClientFactory" />
+
+    <PackageReference Include="Grpc.Tools">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Marten" Version="8.5.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
-    <PackageReference Include="Scrutor" Version="6.1.0" />
+
+    <PackageReference Include="Marten" />
+
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+
+    <PackageReference Include="Scrutor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,17 +40,17 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\..\Shared\Shared\Shared.csproj" />
   </ItemGroup>
-    
-  <ItemGroup>       
-      <protobuf Include="..\..\Discount\Discount.Grpc\Protos\discount.proto" GrpcServices="Client">
-          <Link>Protos\discount.proto</Link>
-      </protobuf>
+
+  <ItemGroup>
+    <protobuf Include="..\..\Discount\Discount.Grpc\Protos\discount.proto" GrpcServices="Client">
+      <Link>Protos\discount.proto</Link>
+    </protobuf>
   </ItemGroup>
-    
+
   <ItemGroup>
     <Content Include="..\..\..\.dockerignore">
       <Link>.dockerignore</Link>
     </Content>
-  </ItemGroup>  
+  </ItemGroup>
 
 </Project>
