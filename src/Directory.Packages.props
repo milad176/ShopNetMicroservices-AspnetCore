@@ -116,4 +116,14 @@
         <PackageVersion Include="OpenTelemetry.SemanticConventions" Version="1.0.0-rc9.9"/>
     </ItemGroup>
 
+    <!-- ========================= -->
+    <!-- TESTS  -->
+    <!-- ========================= -->
+    <ItemGroup Label="Tests">
+        <PackageVersion Include="coverlet.collector" Version="6.0.0"/>
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
+        <PackageVersion Include="xunit" Version="2.5.3"/>
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.3"/>
+    </ItemGroup>
+
 </Project>
