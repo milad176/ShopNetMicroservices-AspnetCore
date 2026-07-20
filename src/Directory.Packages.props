@@ -116,4 +116,17 @@
         <PackageVersion Include="OpenTelemetry.SemanticConventions" Version="1.0.0-rc9.9"/>
     </ItemGroup>
 
+    <!-- ========================= -->
+    <!-- INTEGRATION TESTS  -->
+    <!-- ========================= -->
+    <ItemGroup Label="Tests">
+        <PackageVersion Include="coverlet.collector" Version="6.0.0"/>
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
+        <PackageVersion Include="xunit" Version="2.5.3"/>
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.3"/>
+        <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0"/>
+        <PackageVersion Include="FluentAssertions" Version="8.10.0"/>
+        <PackageVersion Include="Testcontainers.PostgreSql" Version="4.8.1" />
+    </ItemGroup>
+
 </Project>

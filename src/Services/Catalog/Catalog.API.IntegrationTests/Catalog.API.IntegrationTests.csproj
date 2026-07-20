@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="coverlet.collector" />
+        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio" />
+        <PackageVersion Include="Testcontainers.PostgreSql" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Catalog.API\Catalog.API.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\CreateProducts\" />
+      <Folder Include="Features\DeleteProduct\" />
+      <Folder Include="Features\GetProductById\" />
+      <Folder Include="Features\GetProductsByCategory\" />
+      <Folder Include="Features\GetProducts\" />
+      <Folder Include="Helpers\" />
+    </ItemGroup>
+
+</Project>

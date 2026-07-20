@@ -58,6 +58,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{EF172554
 		docker-compose.override.yml = docker-compose.override.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API.IntegrationTests", "Services\Catalog\Catalog.API.IntegrationTests\Catalog.API.IntegrationTests.csproj", "{41F167DC-7997-4B41-8328-55D90A562661}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,6 +126,10 @@ Global
 		{50FCDB7F-9B5C-4A11-A824-07A091A4C9FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50FCDB7F-9B5C-4A11-A824-07A091A4C9FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50FCDB7F-9B5C-4A11-A824-07A091A4C9FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41F167DC-7997-4B41-8328-55D90A562661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F167DC-7997-4B41-8328-55D90A562661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F167DC-7997-4B41-8328-55D90A562661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F167DC-7997-4B41-8328-55D90A562661}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +154,7 @@ Global
 		{658822E1-605F-4BFB-BBDE-6E0A7D6EAE65} = {9E14F2F9-8E44-412A-831C-3664FB09F89E}
 		{53189EFF-F27A-4E3C-9DF6-47C6CBF74558} = {8775B7EC-2EE1-4523-8E8A-D457D755755B}
 		{50FCDB7F-9B5C-4A11-A824-07A091A4C9FE} = {8775B7EC-2EE1-4523-8E8A-D457D755755B}
+		{41F167DC-7997-4B41-8328-55D90A562661} = {A0B60FC4-1B4A-4183-8AE1-EA6612F5AD57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3C1BCEFB-151E-454E-AF5A-C5F5BDD7DB79}
