@@ -1,8 +1,8 @@
 using Testcontainers.PostgreSql;
 
-namespace Catalog.API.IntegrationTests.Database;
+namespace Catalog.API.IntegrationTests.Infrastructure.Database;
 
-public sealed class TestDatabase
+public sealed class TestDatabase : IAsyncDisposable
 {
     private readonly PostgreSqlContainer _container =
         new PostgreSqlBuilder()
@@ -18,7 +18,7 @@ public sealed class TestDatabase
         await _container.StartAsync();
     }
 
-    public async Task StopAsync()
+    public async ValueTask DisposeAsync()
     {
         await _container.StopAsync();
     }

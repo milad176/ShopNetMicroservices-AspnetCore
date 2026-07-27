@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 
-namespace Catalog.API.IntegrationTests;
+namespace Catalog.API.IntegrationTests.Infrastructure;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
