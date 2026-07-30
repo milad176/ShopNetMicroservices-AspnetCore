@@ -20,6 +20,6 @@ public sealed class TestDatabase : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        await _container.StopAsync();
+        await _container.DisposeAsync();
     }
 }
