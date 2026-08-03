@@ -27,8 +27,7 @@ builder.Services.AddMarten(options =>
 
 builder.Services.AddHealthChecks(builder.Configuration);
 
-if (builder.Environment.IsDevelopment()
-    || builder.Environment.IsEnvironment("Testing"))
+if (builder.Environment.IsDevelopment())
 {
     builder.Services.InitializeMartenWith<CatalogInitialDataMigration>();
 }
