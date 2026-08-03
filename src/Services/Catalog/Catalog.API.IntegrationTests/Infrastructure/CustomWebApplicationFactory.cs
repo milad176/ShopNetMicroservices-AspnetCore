@@ -1,6 +1,7 @@
+using Catalog.API.Models;
+using Marten;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Configuration;
 
 namespace Catalog.API.IntegrationTests.Infrastructure;
 
@@ -17,12 +18,19 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         builder.UseEnvironment("Testing");
 
-        builder.ConfigureAppConfiguration((_, config) =>
+        builder.ConfigureServices(services =>
         {
-            config.AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                ["ConnectionStrings:Database"] = _connectionString
-            });
+            var descriptor = services.SingleOrDefault(x => x.ServiceType == typeof(IDocumentStore));
+
+            if (descriptor != null)
+                services.Remove(descriptor);
+
+            services.AddMarten(opts =>
+                {
+                    opts.Connection(_connectionString);
+                    opts.Schema.For<Product>().UseNumericRevisions(true);
+                })
+                .UseLightweightSessions();
         });
     }
 }
