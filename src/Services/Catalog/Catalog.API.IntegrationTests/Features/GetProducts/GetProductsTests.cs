@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Catalog.API.Features.Products.GetProducts;
 using Catalog.API.IntegrationTests.Infrastructure.AutoFixture;
+using Catalog.API.IntegrationTests.Infrastructure.TestData;
 using Catalog.API.Models;
 using FluentAssertions;
 
@@ -22,27 +23,9 @@ public class GetProductsTests
     public async Task GetProducts_Should_Return_All_Products()
     {
         // Arrange
-        var product1 = new Product
-        {
-            Id = Guid.NewGuid(),
-            Name = "MacBook Pro",
-            Category = ["Laptop"],
-            Description = "Apple laptop",
-            ImageFile = "macbook.png",
-            Price = 2499
-        };
-
-        var product2 = new Product
-        {
-            Id = Guid.NewGuid(),
-            Name = "Surface Laptop",
-            Category = ["Laptop"],
-            Description = "Microsoft laptop",
-            ImageFile = "surface.png",
-            Price = 1999
-        };
-
-        await _fixture.SeedAsync(product1, product2);
+        await _fixture.SeedAsync(
+            ProductData.MacBookPro(),
+            ProductData.SurfaceLaptop());
 
         // Act 
         var response = await _fixture.Client.GetAsync("/api/v1/catalog/products?pageIndex=0&pageSize=10");
