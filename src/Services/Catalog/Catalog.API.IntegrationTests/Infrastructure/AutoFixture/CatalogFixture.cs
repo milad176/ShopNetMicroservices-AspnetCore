@@ -1,7 +1,4 @@
-using Catalog.API.IntegrationTests.Infrastructure.Database;
-using Catalog.API.Models;
 using Marten;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalog.API.IntegrationTests.Infrastructure.AutoFixture;
 
