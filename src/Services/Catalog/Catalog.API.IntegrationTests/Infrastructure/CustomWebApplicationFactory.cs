@@ -1,7 +1,4 @@
-using Catalog.API.Models;
 using Marten;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Catalog.API.IntegrationTests.Infrastructure;
 

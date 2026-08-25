@@ -1,5 +1,3 @@
-using Catalog.API.Models;
-
 namespace Catalog.API.IntegrationTests.Infrastructure.TestData;
 
 public class ProductBuilder

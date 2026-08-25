@@ -30,7 +30,6 @@
       <Folder Include="Features\DeleteProduct\" />
       <Folder Include="Features\GetProductById\" />
       <Folder Include="Features\GetProductsByCategory\" />
-      <Folder Include="Helpers\" />
     </ItemGroup>
 
 </Project>
