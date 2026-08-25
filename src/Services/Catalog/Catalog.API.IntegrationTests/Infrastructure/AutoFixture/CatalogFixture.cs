@@ -23,6 +23,15 @@ public class CatalogFixture : IAsyncLifetime
         await _database.DisposeAsync();
     }
 
+    public async Task ResetAsync()
+    {
+        await using var session = DocumentStore.LightweightSession();
+
+        session.DeleteWhere<Product>(_ => true);
+
+        await session.SaveChangesAsync();
+    }
+
     public IServiceProvider Services => _factory.Services;
 
     public IDocumentStore DocumentStore =>
@@ -30,6 +39,8 @@ public class CatalogFixture : IAsyncLifetime
 
     public async Task SeedAsync(params Product[] products)
     {
+        await ResetAsync();
+
         await using var session = DocumentStore.LightweightSession();
 
         foreach (var product in products)

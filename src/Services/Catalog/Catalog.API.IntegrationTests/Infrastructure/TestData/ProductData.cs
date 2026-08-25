@@ -1,7 +1,6 @@
 namespace Catalog.API.IntegrationTests.Infrastructure.TestData;
 
 public static class ProductData
-
 {
     public static Product MacBookPro() =>
         new ProductBuilder()
@@ -19,5 +18,14 @@ public static class ProductData
             .WithDescription("Microsoft laptop")
             .WithImage("surface.png")
             .WithPrice(1999)
+            .Build();
+
+    public static Product IPhone() =>
+        new ProductBuilder()
+            .WithName("IPhone")
+            .WithCategory(["Phone"])
+            .WithDescription("Apple iPhone")
+            .WithImage("IPhone.png")
+            .WithPrice(1500)
             .Build();
 }
