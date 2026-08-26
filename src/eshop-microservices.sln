@@ -60,7 +60,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{EF172554
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API.IntegrationTests", "Services\Catalog\Catalog.API.IntegrationTests\Catalog.API.IntegrationTests.csproj", "{41F167DC-7997-4B41-8328-55D90A562661}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity.API", "Identity.API", "{A1F2E4BA-F202-4C63-8BD0-A7025C779F44}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{A1F2E4BA-F202-4C63-8BD0-A7025C779F44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.API", "Services\Identity.API\Identity.API\Identity.API.csproj", "{7CCF0D36-9729-4F87-B215-79AF85422A8D}"
 EndProject
