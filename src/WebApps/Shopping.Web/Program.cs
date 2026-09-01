@@ -2,6 +2,8 @@ using BuildingBlocks.HealthChecks;
 using BuildingBlocks.OpenTelemetry;
 using BuildingBlocks.Resilience.Http;
 using Common.Logging;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Serilog;
 using Shopping.Web.Common;
 
@@ -16,6 +18,20 @@ builder.Host.UseSeriLogging();
 // Add services to the container.
 builder.Services.AddTransient<LoggingDelegatingHandler>();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    })
+    .AddCookie()
+    .AddOpenIdConnect(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:ClientId"]!;
+    });
+
+builder.Services.AddAuthorization();
 builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks(builder.Configuration);
 
@@ -28,7 +44,6 @@ builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
     .AddStandardResiliencePolicies();
-
 
 builder.Services.AddRefitClient<IOrderingService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
@@ -55,10 +70,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.MapDefaultHealthChecks();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapRazorPages();
 
 app.Run();
