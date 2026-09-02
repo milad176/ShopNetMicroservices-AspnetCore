@@ -29,6 +29,14 @@ builder.Services
     .AddOpenIdConnect(options =>
     {
         options.ClientId = builder.Configuration["Authentication:ClientId"]!;
+        options.Authority = builder.Configuration["Authentication:Authority"]!;
+
+        options.ResponseType = "code";
+        options.SaveTokens = true;
+
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+        options.Scope.Add("email");
     });
 
 builder.Services.AddAuthorization();
