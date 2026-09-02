@@ -19,6 +19,7 @@
     <!-- ASP.NET / API STACK -->
     <!-- ========================= -->
     <ItemGroup Label="Web / API">
+        <PackageVersion Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.0" />
         <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
         <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.0.0" />
         <PackageVersion Include="Carter" Version="10.0.0" />
@@ -81,7 +82,6 @@
         <PackageVersion Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
         <PackageVersion Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
         <PackageVersion Include="AspNetCore.HealthChecks.Redis" Version="9.0.0" />
-
         <PackageVersion Include="AspNetCore.HealthChecks.Sqlite" Version="8.0.0" />
         <PackageVersion Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.0" />
         <PackageVersion Include="AspNetCore.HealthChecks.Rabbitmq" Version="8.0.0" />

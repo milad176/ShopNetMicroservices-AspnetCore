@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="AspNetCore.HealthChecks.Uris" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
         <PackageReference Include="Refit.HttpClientFactory" />
     </ItemGroup>
 
