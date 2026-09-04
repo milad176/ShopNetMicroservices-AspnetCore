@@ -1,0 +1,21 @@
+@page
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Authenticated</title>
+</head>
+<body>
+<h1>You are authenticated!</h1>
+
+<p>Hello, @User.Identity?.Name</p>
+
+<p>
+    Authentication type:
+    @User.Identity?.AuthenticationType
+</p>
+</body>
+</html>
