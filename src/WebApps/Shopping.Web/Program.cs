@@ -30,6 +30,7 @@ builder.Services
     {
         options.ClientId = builder.Configuration["Authentication:ClientId"]!;
         options.Authority = builder.Configuration["Authentication:Authority"]!;
+        options.ClientSecret = builder.Configuration["Authentication:ClientSecret"]!;
 
         options.ResponseType = "code";
         options.SaveTokens = true;
