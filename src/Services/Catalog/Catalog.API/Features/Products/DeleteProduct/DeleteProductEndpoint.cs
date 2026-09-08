@@ -6,6 +6,7 @@ namespace Catalog.API.Features.Products.DeleteProduct
         public static IEndpointRouteBuilder MapDeleteProductEndpoint(this IEndpointRouteBuilder app)
         {
             app.MapDelete("/products/{id}", UpdateProduct)
+                .RequireAuthorization()
                 .WithName("DeleteProduct")
                 .Produces<DeleteProductResponse>(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)

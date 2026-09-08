@@ -5,6 +5,7 @@
         public static IEndpointRouteBuilder MapUpdateProductEndpoint(this IEndpointRouteBuilder app)
         {
             app.MapPut("/products", UpdataeProduct)
+                .RequireAuthorization()
                 .WithName("UpdateProduct")
                 .Produces<UpdateProductResponse>(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)

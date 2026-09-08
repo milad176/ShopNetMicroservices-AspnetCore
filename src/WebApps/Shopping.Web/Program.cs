@@ -38,6 +38,7 @@ builder.Services
         options.Scope.Add("openid");
         options.Scope.Add("profile");
         options.Scope.Add("email");
+        options.Scope.Add("api://aad4dd1c-0a4a-4b3b-b51b-f751248ae885/catalog.read");
     });
 
 builder.Services.AddAuthorization();

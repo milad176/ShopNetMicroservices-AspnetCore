@@ -5,6 +5,7 @@
         public static IEndpointRouteBuilder MapGetProductEndpoint(this IEndpointRouteBuilder app)
         {
             app.MapGet("/products", GetProducts)
+                .RequireAuthorization()
                 .WithName("GetProducts")
                 .Produces<GetProductsResponse>(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)

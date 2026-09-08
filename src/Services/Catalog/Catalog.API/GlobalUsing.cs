@@ -10,4 +10,5 @@ global using Mapster;
 global using Marten;
 global using MediatR;
 global using Microsoft.AspNetCore.Http.HttpResults;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using System.Text.Json.Serialization;

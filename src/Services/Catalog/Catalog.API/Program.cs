@@ -32,6 +32,16 @@ if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogInitialDataMigration>();
 }
 
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Authentication:Authority"];
+        options.Audience = builder.Configuration["Authentication:Audience"];
+    });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 app.UseMiddleware<CorrelationIdMiddleware>();
@@ -39,6 +49,9 @@ app.UseSerilogRequestLogging();
 
 // Add routing BEFORE exception handler
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Exception handler AFTER routing, BEFORE endpoints
 app.UseProblemDetailsResponseExceptionHandler();
