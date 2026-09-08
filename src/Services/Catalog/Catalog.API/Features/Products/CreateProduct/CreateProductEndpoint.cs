@@ -5,6 +5,7 @@ public static class CreateProductEndpoint
     public static IEndpointRouteBuilder MapCreateProductEndpoint(this IEndpointRouteBuilder app)
     {
         app.MapPost("/products", CreateProduct)
+            .RequireAuthorization()
             .WithName("CreateProduct")
             .Produces<CreateProductResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)

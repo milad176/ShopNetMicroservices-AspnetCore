@@ -5,6 +5,7 @@
         public static IEndpointRouteBuilder MapGetProductByCategoryEndpoint(this IEndpointRouteBuilder app)
         {
             app.MapGet("/products/category/{category}", GetProductsByCategory)
+                .RequireAuthorization()
                 .WithName("GetProductByCategory")
                 .Produces<GetProductByCategoryResponse>(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
