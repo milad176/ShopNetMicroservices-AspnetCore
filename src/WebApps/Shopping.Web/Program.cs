@@ -17,6 +17,7 @@ builder.Host.UseSeriLogging();
 
 // Add services to the container.
 builder.Services.AddTransient<LoggingDelegatingHandler>();
+builder.Services.AddTransient<AccessTokenDelegatingHandler>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services
@@ -48,16 +49,19 @@ builder.Services.AddHealthChecks(builder.Configuration);
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddHttpMessageHandler<AccessTokenDelegatingHandler>()
     .AddStandardResiliencePolicies();
 
 builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddHttpMessageHandler<AccessTokenDelegatingHandler>()
     .AddStandardResiliencePolicies();
 
 builder.Services.AddRefitClient<IOrderingService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); })
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddHttpMessageHandler<AccessTokenDelegatingHandler>()
     .AddStandardResiliencePolicies();
 
 var app = builder.Build();
