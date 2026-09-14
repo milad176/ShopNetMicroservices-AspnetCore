@@ -1,3 +1,4 @@
+using BuildingBlocks.Authentication;
 using BuildingBlocks.Exceptions.Handler;
 using BuildingBlocks.OpenTelemetry;
 using Catalog.API.Common;
@@ -32,15 +33,7 @@ if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogInitialDataMigration>();
 }
 
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.Authority = builder.Configuration["Authentication:Authority"];
-        options.Audience = builder.Configuration["Authentication:Audience"];
-    });
-
-builder.Services.AddAuthorization();
+builder.Services.AddBuildingBlocksAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
