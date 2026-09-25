@@ -7,6 +7,7 @@ public static class CheckoutBasketEndpoints
     public static IEndpointRouteBuilder MapCheckoutBasketEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapPost("/checkout", CheckoutBasketAsync)
+            .RequireAuthorization()
             .WithName("CheckoutBasket")
             .Produces<CheckoutBasketResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)

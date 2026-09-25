@@ -1,6 +1,7 @@
 using Basket.API.Common;
 using Basket.API.Interceptors;
 using Basket.API.Models.Configs;
+using BuildingBlocks.Authentication;
 using BuildingBlocks.Exceptions.Handler;
 using BuildingBlocks.HealthChecks;
 using BuildingBlocks.Messaging.MassTransit;
@@ -57,6 +58,8 @@ builder.Services.AddMessageBroker(builder.Configuration);
 
 builder.Services.AddHealthChecks(builder.Configuration);
 
+builder.Services.AddBuildingBlocksAuthentication(builder.Configuration);
+
 var app = builder.Build();
 
 app.UseMiddleware<CorrelationIdMiddleware>();
@@ -69,6 +72,10 @@ app.UseSerilogRequestLogging(options =>
 });
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseProblemDetailsResponseExceptionHandler();
 app.MapDefaultHealthChecks();
 

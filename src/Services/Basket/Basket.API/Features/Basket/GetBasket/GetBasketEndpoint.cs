@@ -7,6 +7,7 @@ public static class GetBasketEndpoint
     public static IEndpointRouteBuilder MapGetBasketEndpoint(this IEndpointRouteBuilder app)
     {
         app.MapGet("/{username}", GetBasketAsync)
+            .RequireAuthorization()
             .WithName("GetBasket")
             .Produces<GetBasketResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)

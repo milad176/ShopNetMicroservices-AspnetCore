@@ -7,6 +7,7 @@ namespace Basket.API.Features.Basket.DeleteBasket
         public static IEndpointRouteBuilder MapDeleteBasketEndpoint(this IEndpointRouteBuilder app)
         {
             app.MapDelete("/{username}", DeleteBasketAsync)
+                .RequireAuthorization()
                 .WithName("DeleteBasket")
                 .Produces<DeleteBasketResponse>(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
