@@ -7,6 +7,7 @@ public static class StoreBasketEndpoint
     public static IEndpointRouteBuilder MapStoreBasketEndpoint(this IEndpointRouteBuilder app)
     {
         app.MapPost("/", StoreBasketAsync)
+            .RequireAuthorization()
             .WithName("StoreBasket")
             .Produces<StoreBasketResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
