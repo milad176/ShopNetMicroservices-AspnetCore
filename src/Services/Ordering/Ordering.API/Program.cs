@@ -1,3 +1,4 @@
+using BuildingBlocks.Authentication;
 using BuildingBlocks.OpenTelemetry;
 using Common.Logging;
 using Ordering.API;
@@ -20,6 +21,8 @@ builder.Services
     .AddInfrastructureServices(builder.Configuration)
     .AddApiServices(builder.Configuration);
 
+builder.Services.AddBuildingBlocksAuthentication(builder.Configuration);
+
 var app = builder.Build();
 
 app.UseMiddleware<CorrelationIdMiddleware>();
@@ -33,6 +36,10 @@ app.UseSerilogRequestLogging(options =>
 
 // Configure the HTTP request pipeline.
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseApiServices();
 
 if (app.Environment.IsDevelopment())
