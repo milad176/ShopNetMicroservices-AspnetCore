@@ -15,7 +15,18 @@ public static class AuthenticationExtensions
             {
                 options.Authority = configuration["Authentication:Authority"];
 
-                options.Audience = configuration["Authentication:Audience"];
+                var audiences = configuration
+                    .GetSection("Authentication:Audiences")
+                    .Get<string[]>();
+
+                if (audiences is { Length: > 0 })
+                {
+                    options.TokenValidationParameters.ValidAudiences = audiences;
+                }
+                else
+                {
+                    options.Audience = configuration["Authentication:Audience"];
+                }
             });
 
         services.AddAuthorization();

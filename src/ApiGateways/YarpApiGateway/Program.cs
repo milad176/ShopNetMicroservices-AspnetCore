@@ -1,3 +1,4 @@
+using BuildingBlocks.Authentication;
 using BuildingBlocks.HealthChecks;
 using BuildingBlocks.OpenTelemetry;
 using Common.Logging;
@@ -12,6 +13,9 @@ builder.Host.UseSeriLogging();
 
 const string serviceName = "api.gateway";
 builder.Services.AddOpenTelemetryOtl(serviceName);
+
+// Add JWT bearer authentication and authorization.
+builder.Services.AddBuildingBlocksAuthentication(builder.Configuration);
 
 // Needed for correlation propagation
 builder.Services.AddHttpContextAccessor();
@@ -48,6 +52,10 @@ app.UseSerilogRequestLogging(options =>
 // Configure the HTTP request pipeline.
 app.UseRouting();
 app.UseRateLimiter();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapReverseProxy();
 app.MapDefaultHealthChecks();
 
