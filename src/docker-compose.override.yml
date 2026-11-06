@@ -167,6 +167,17 @@ services:
     ports:
       - "8005:80"
       - "9005:81"
+    
+  identity.api:
+    container_name: identity.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
+      - ConnectionStrings__Database=Server=orderDb;Database=IdentityDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
+    depends_on:
+      - orderDb
+    ports:
+      - "8006:80"    
   
   elasticsearch:
     container_name: elasticsearch
